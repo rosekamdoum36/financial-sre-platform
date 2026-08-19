@@ -9,16 +9,28 @@ jobs:
   terraform:
     name: Terraform Validation
     runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
     defaults:
       run:
         working-directory: environments/dev
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::055657146366:role/financial-sre-github-actions-role
+          aws-region: us-east-1
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.15.5
+      
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
       - name: Build Lambda deployment packages
@@ -30,6 +42,8 @@ jobs:
           zip transaction-worker.zip lambda_function.py
 
       - name: Terraform Init
-        run: terraform init -backend=false
+        run: terraform init
       - name: Terraform Validate
         run: terraform validate
+      - name: Terraform Plan
+        run: terraform plan
