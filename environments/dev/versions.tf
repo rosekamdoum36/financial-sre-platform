@@ -1,5 +1,12 @@
 terraform {
   required_version = ">= 1.5.0"
+  backend "s3" {
+    bucket       = "financial-sre-platform-tfstate-rosekamdoum36"
+    key          = "financial-sre-platform/dev/terraform.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
+  }
 
   required_providers {
     aws = {
