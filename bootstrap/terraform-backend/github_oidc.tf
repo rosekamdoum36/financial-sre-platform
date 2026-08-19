@@ -29,15 +29,15 @@ data "aws_iam_policy_document" "github_actions_trust" {
         "sts.amazonaws.com"
       ]
     }
-
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
 
       values = [
-        "repo:rosekamdoum36/financial-sre-platform:*"
+        "repo:rosekamdoum@36297716907/financial-sre-platform@1339165400:*"
       ]
     }
+
   }
 }
 
