@@ -21,11 +21,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::055657146366:role/financial-sre-github-actions-role
-          aws-region: us-east-1
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
