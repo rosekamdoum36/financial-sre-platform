@@ -26,26 +26,11 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::055657146366:role/financial-sre-github-actions-role
           aws-region: us-east-1
-      - name: Inspect OIDC claims
-        uses: actions/github-script@v8
-        with:
-          script: |
-            const token = await core.getIDToken('sts.amazonaws.com');
-            const payload = JSON.parse(
-              Buffer.from(token.split('.')[1], 'base64url').toString()
-            );
-
-            console.log("OIDC issuer:", payload.iss);
-            console.log("OIDC audience:", payload.aud);
-            console.log("OIDC subject:", payload.sub);
-            console.log("Repository:", payload.repository);
-            console.log("Ref:", payload.ref);
-            console.log("Event:", payload.event_name);
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: YOUR_ACTUAL_ROLE_ARN
+          role-to-assume: arn:aws:iam::055657146366:role/financial-sre-github-actions-role
           aws-region: us-east-1 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
